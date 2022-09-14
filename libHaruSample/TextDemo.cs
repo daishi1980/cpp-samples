@@ -33,6 +33,22 @@ public class TextDemo {
             // ページ設定
             page.SetSize(HPdfPageSizes.HPDF_PAGE_SIZE_A4, HPdfPageDirection.HPDF_PAGE_LANDSCAPE);
 
+
+            //HPdfFont font = pdf.GetFont("Helvetica", null);
+            
+            pdf.UseJPEncodings();
+            pdf.UseJPFonts();
+            //HPdfFont font = pdf.GetFont("MS-Mincyo", "90ms-RKSJ-H"); //エラー。取得できない
+            HPdfFont font = pdf.GetFont("MS-Gothic", "90ms-RKSJ-H");
+
+            page.SetFontAndSize(font, 24);
+            
+            page.BeginText();
+            float tw = page.TextWidth(page_title);
+            page.TextOut((page.GetWidth() - tw) / 2, page.GetHeight() - 50, page_title);
+            page.EndText();
+
+
             // 保存
             pdf.SaveToFile("libHaruSample.pdf");
 

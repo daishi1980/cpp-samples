@@ -13,14 +13,31 @@ static void error_handler(HPDF_STATUS err, HPDF_STATUS   detNo, void *udat) {
 
 int main()
 {
+    const char *page_title = "タイトル";
+
     // ドキュメント生成
     HPDF_Doc pdf = HPDF_New(error_handler, NULL);
 
     // ページ追加
-    HPDF_Page page_1 = HPDF_AddPage(pdf);
+    HPDF_Page page = HPDF_AddPage(pdf);
 
     // ページ設定
-    HPDF_Page_SetSize(page_1, HPDF_PAGE_SIZE_A4, HPDF_PAGE_LANDSCAPE);
+    HPDF_Page_SetSize(page, HPDF_PAGE_SIZE_A4, HPDF_PAGE_LANDSCAPE);
+
+    //HPDF_Font font = HPDF_GetFont(pdf, "Helvetica", nullptr);
+    HPDF_UseJPEncodings(pdf);
+    HPDF_UseJPFonts(pdf);
+
+  //HPDF_Font font = HPDF_GetFont(pdf, "MS-Mincyo", "90ms-RKSJ-H");　//エラー。取得できない
+    HPDF_Font font = HPDF_GetFont(pdf, "MS-Gothic", "90ms-RKSJ-H");
+
+
+    HPDF_Page_SetFontAndSize(page, font, 24);
+
+    HPDF_Page_BeginText(page);
+    float tw = HPDF_Page_TextWidth(page, page_title);
+    HPDF_Page_TextOut(page, (HPDF_Page_GetWidth(page) - tw) / 2, HPDF_Page_GetHeight(page) - 50, page_title);
+    HPDF_Page_EndText(page);
 
     // 保存
     HPDF_SaveToFile(pdf, "libHaruCppSample.pdf");
