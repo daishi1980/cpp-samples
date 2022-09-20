@@ -7,11 +7,11 @@ TEST(TestCaseName, TestName) {
   EXPECT_TRUE(true);
 }
 
-TEST(SampleUtilsTest, AddTest) {
+TEST(SampleTest, AddTest) {
     EXPECT_EQ(10, Add(3, 7));
 }
 
-//TEST(SamplePointTest, ConstructorTest) {
-//    SamplePoint pt(1, 7);
-//    EXPECT_EQ(1, pt.GetX());
-//}
+TEST(SampleTest, ConstructorTest) {
+    SamplePoint pt(1, 7);
+    EXPECT_EQ(2, pt.GetX(), "test3");
+}

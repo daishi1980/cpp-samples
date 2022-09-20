@@ -1,6 +1,8 @@
 #pragma once
 
-class SamplePoint {
+#include "Lib_DLL.h"
+
+class _LIB_API SamplePoint {
 public:
     SamplePoint(int x, int y);
     int GetX();
