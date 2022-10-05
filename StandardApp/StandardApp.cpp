@@ -3,6 +3,7 @@
 
 #include "framework.h"
 #include "StandardApp.h"
+#include <string>
 
 #define MAX_LOADSTRING 100
 
@@ -25,8 +26,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-    // TODO: ここにコードを挿入してください。
-
     // グローバル文字列を初期化する
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_STANDARDAPP, szWindowClass, MAX_LOADSTRING);
@@ -39,7 +38,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_STANDARDAPP));
-
     MSG msg;
 
     // メイン メッセージ ループ:
@@ -51,7 +49,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             DispatchMessage(&msg);
         }
     }
-
     return (int) msg.wParam;
 }
 
@@ -163,9 +160,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     UNREFERENCED_PARAMETER(lParam);
+    HWND hBtn = GetDlgItem(hDlg,IDOK);
+    wchar_t text[32];
+    std::wstring newText;
     switch (message)
     {
     case WM_INITDIALOG:
+        GetWindowText(hBtn, text, 32);
+        newText = text;
+        newText += L"だよ！";
+        SetWindowText(hBtn, newText.c_str());
+        EnableWindow(hBtn, FALSE);
         return (INT_PTR)TRUE;
 
     case WM_COMMAND:
