@@ -111,44 +111,32 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 
-//
-//  関数: WndProc(HWND, UINT, WPARAM, LPARAM)
-//
-//  目的:    メイン ウィンドウのメッセージを処理します。
-//
-//  WM_COMMAND  - アプリケーション メニューの処理
-//  WM_PAINT    - メイン ウィンドウの描画
-//  WM_DESTROY  - 中止メッセージを表示して戻る
-//
-//
+HWND hEdt;
+HWND hBtn;
+HWND hStc;
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
-    case WM_COMMAND:
-        {
-            int wmId = LOWORD(wParam);
-            // 選択されたメニューの解析:
-            switch (wmId)
-            {
-            case IDM_ABOUT:
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-                break;
-            case IDM_EXIT:
-                DestroyWindow(hWnd);
-                break;
-            default:
-                return DefWindowProc(hWnd, message, wParam, lParam);
-            }
-        }
+    case WM_CREATE:
+        //エディットの作成
+        hEdt = CreateWindowEx(0, L"EDIT", L"", WS_CHILD | WS_VISIBLE | WS_BORDER | ES_AUTOHSCROLL,
+            10, 10, 200, 50, hWnd, (HMENU)IDM_SAMPLE_EDT, hInst, NULL);
+        
+        //ボタンの作成
+        hBtn = CreateWindowEx(0, L"BUTTON", L"Push!!", WS_CHILD | WS_VISIBLE | BS_FLAT, 
+            10, 100, 50, 30,  hWnd, (HMENU)IDM_SAMPLE_BTN, hInst, NULL);
+
+        //スタティックコントロールの作成
+        hStc = CreateWindowEx(0, L"STATIC", L"Sample Text", WS_CHILD | WS_VISIBLE,
+            10, 150, 100, 30, hWnd, (HMENU)IDM_SAMPLE_STC, hInst, NULL);
         break;
-    case WM_PAINT:
-        {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: HDC を使用する描画コードをここに追加してください...
-            EndPaint(hWnd, &ps);
-        }
+    case WM_CLOSE:
+        DestroyWindow(hEdt);
+        DestroyWindow(hBtn);
+        DestroyWindow(hStc);
+        DestroyWindow(hWnd);
         break;
     case WM_DESTROY:
         PostQuitMessage(0);
