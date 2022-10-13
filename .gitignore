@@ -1,2 +1,8 @@
 samples.VC.db
 .vs/samples/v14/.suo
+.vs/
+alias.template/x64/
+class.template/x64/
+member.template/x64/
+method.template/x64/
+x64/
