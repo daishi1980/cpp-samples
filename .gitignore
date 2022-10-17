@@ -1,2 +1,8 @@
 samples.VC.db
 .vs/samples/v14/.suo
+.vs/samples/v17/.suo
+.vs/samples/v17/Browse.VC.db
+.vs/
+iterator.sample/x64/
+vector.sample/x64/
+x64/
